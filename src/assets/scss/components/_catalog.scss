@@ -1,0 +1,143 @@
+// .hzh-catalog
+.hzh-catalog{
+    background: #f0f0f0 url(../../../assets/img/catalog_bg.svg) 50% no-repeat;
+    background-size: cover;
+    padding-top: 50px;
+    padding-bottom: 70px;
+    overflow: hidden;
+    .hzh-formobile{
+        font-family: $philosopher-font-family;
+        font-size: 16px;
+        font-weight: 300;
+        line-height: 22px;
+        @include breakpoint(medium large){
+            display: none;
+        }
+    }
+    .hzh-for-medium-and-large{
+        display: none;
+        @include breakpoint(medium large){
+            display: block;
+        }
+    }
+    .hzh-catalogtitle{
+        margin-bottom: 30px;
+        &:hover{
+            @include breakpoint(medium large){
+                border-bottom: 1px solid #11060179;
+            }
+        }
+    }
+    .hzh-catalogs{
+        @include breakpoint(large){
+            column-count: 3;
+            max-height: 750px;
+        }
+        background-color: #fff;
+        padding: 25px 25px 45px 25px;
+        position: relative;
+        div{
+            padding-right: 50px;
+            padding-left: 25px;
+        }
+    }
+    .hzh-allbooks{
+        position: absolute;
+        bottom: 0;
+        right: 50px;
+        font-size: 16px;
+        border-bottom: none;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+    a{
+        text-decoration: none;
+        font-family: $forum-font-family;
+        font-size: 30px;
+        color: #110601;
+    }
+    a + ul{
+        margin-bottom: 50px;
+    }
+    ul{
+        margin-left: 0;
+        margin-top: 30px;
+    }
+    li{
+        list-style: none;
+        margin-bottom: 16px;
+        @include breakpoint(medium large){
+            &:hover{
+                background: rgba(249, 214, 28, 0.35);
+                color: #11060179;
+            }
+        }
+        a{
+            font-family: $ubuntu-font-family;
+            font-weight: 300;
+            line-height: 22px;
+            font-size: 16px;
+            color: #110601;
+            &:hover{
+                border-bottom: none;
+            }
+        }
+    }
+
+}
+h2{
+    position: relative;
+    font-family: $philosopher-font-family;
+    font-size: 36px;
+    color: #110601;
+    margin-bottom: 40px;
+    &::after{
+        @include breakpoint(large medium){
+            width:40%;
+            left: -3%;    
+        }
+        position: absolute;
+        content: " ";
+        border: 0.5px solid #110601;
+        display:table-cell;
+        width:60%;
+        left: -3%;
+    }
+}
+
+
+//mobile
+.tabs {
+    font-family: $philosopher-font-family;
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    // min-width: 15rem;
+    @include breakpoint(medium large){
+        display: block;
+    }
+    li {
+        padding: 15px 0 0 20px;
+        list-style: none;
+    }
+    a {
+        color: #000;
+        text-decoration:none;
+        position: relative;
+        &:focus{
+            font-size: 24px;        
+        }
+    }
+}
+.tab {
+    font-family: $ubuntu-font-family;
+    display:none;
+    color:#000;
+    background: #fff;
+    padding: 1.5rem;
+        &.current {
+            display:flex;
+        }
+}

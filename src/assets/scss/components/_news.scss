@@ -1,0 +1,15 @@
+.ok-news{
+    padding: 100px 0 100px;
+    overflow: hidden;
+    .row + .row{
+        margin-top: 65px;
+    }
+}
+
+.ok-event-img{
+    transition: 0.3s ease-in;
+    &:hover{
+        transition: 0.3s ease-in;
+        background: rgba(255, 255, 255, 0.5);
+    }
+}

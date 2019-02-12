@@ -1,0 +1,230 @@
+<section class="order">
+    <div class="row" style="overflow: hidden;">
+        <div class="vo-cart-title">
+            <h4 class="ok-title-order-number">Оформлення замовлення</h4>
+        </div>
+        <div class="vo-cart-table-head small-12 medium-offset-3">
+            <div class="small-4 medium-5 large-6 vo-cart-tab-title">Кошик</div>
+            <div class="small-8 medium-4 vo-qty-price">
+                <div class="">кількість</div>
+                <div class="">ціна</div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="vo-product-cart"></div>
+    <script type="text/template" id="product-cart">
+        <div class="callout small-12" data-closable="slide-out-left" id="vo-callout-item--product-id--">
+            <div class="row" style="position: relative;">
+                <button class="close-button" aria-label="Dismiss alert" type="button" data-close onclick="deletFromCart(--product-id--, --qty--)"">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="column small-6 medium-3 small-order-2 medium-order-1 ">
+                    <div class="ok-order-img">
+                        <img src="{{root}}assets/img/--image--" alt="--title--">
+                    </div>
+                </div>
+                <div class="column small-6 medium-5 small-order-3 medium-order-2">
+                    <div class="ok-order-info">
+                        <h5 class="ok-order-title">
+                            --title--
+                        </h5>
+                        <span class="ok-order-author">
+                            --author--
+                        </span>
+                        <div class="ok-book-info-order">
+                            <p class="small-12 medium-4">
+                               --isbn-- --pages-- --cover-- --year-- --format--
+                            </p>
+                            <span><svg><use xlink:href="#ok-comment" /></svg>коментувати</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="column small-12 medium-4 small-order-1 medium-order-3">
+                    <div class="order-price-quantity order-num">
+                    <!-- <div class="order-price-quantity ok-input-nubmer order-num"> -->
+                        <div class="default-price" onclick="defaultPrice(--price--, 'vo-cart-qty--product-id--', 'vo-cart-price--product-id--')" style="visibility:hidden;"></div>
+                        <div class="ok-input-nubmer order-num" >
+                            <button class="vo-minus vo-minus--product-id--"
+                            onclick="quantityProducts('vo-plus--product-id--', 'vo-minus--product-id--', 'vo-num--product-id--', 0); changeQuantity(--product-id--, --price--, 'vo-cart-qty--product-id--', 'vo-cart-price--product-id--', 0);">- </button>
+
+                            <input class="vo-num--product-id-- qty-all" type="number" min="1" max="10" value="--qty--" id="vo-cart-qty--product-id--" readonly>
+
+                            <button class="vo-plus vo-plus--product-id--"
+                            onclick="quantityProducts('vo-plus--product-id--', 'vo-minus--product-id--', 'vo-num--product-id--', 1); changeQuantity(--product-id--, --price--, 'vo-cart-qty--product-id--', 'vo-cart-price--product-id--', 1);"> +</button>
+                        </div>
+                        <span class="ok-book-order-price" id="vo-cart-price--product-id--">--price-- грн</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+
+<div class="row">
+    <div class="vo-cart-table-footer small-9 medium-offset-3">
+        <div class="small-6 medium-7 vo-cart-tab-title-foot">Всього</div>
+        <div class="small-6 medium-4 vo-qty-price-foot" id="vo-price-summ" onclick="summAllPrices();">
+            0
+        </div>
+    </div>
+</div>
+
+<script>
+    if (localStorage.getItem("cart")){
+        const localCartData = localStorage.getItem("cart").split(',');
+        const cartTmpl = document.getElementById('product-cart').innerHTML;
+        const cartInsert = document.querySelector('.vo-product-cart');
+        let cartHTML = '';
+        let cartData = '';
+
+        localCartData.forEach( function(el) {
+            let productId = el.replace(/-/g,'').split(':')[0];
+            let productQty = el.replace(/-/g,'').split(':')[1];
+            const xhr = new XMLHttpRequest();
+            const url = '../assets/data/all_by_id.json';
+
+            xhr.onload = function (){
+                let ajax = this;
+                const data = JSON.parse(ajax.response);
+
+                cartData = data[0][productId];
+
+                if (cartData.price){
+                    cartHTML += cartTmpl
+                    .replace(/--title--/ig, cartData.title)
+                    .replace(/--author--/ig, cartData.author)
+                    .replace(/--image--/ig, cartData.image)
+                    .replace(/--year--/ig, cartData.published)
+                    .replace(/--pages--/ig, cartData.pages)
+                    .replace(/--format--/ig, cartData.format)
+                    .replace(/--cover--/ig, cartData.cover)
+                    .replace(/--isbn--/ig, cartData.isbn)
+                    .replace(/--author--/ig, cartData.author)
+                    .replace(/--product-id--/ig, cartData.id)
+                    .replace(/--price--/ig, cartData.price)
+                    .replace(/--qty--/ig, productQty);
+                } else{
+                    cartHTML += cartTmpl
+                    .replace(/--title--/ig, cartData.title)
+                    .replace(/--author--/ig, cartData.author)
+                    .replace(/--image--/ig, cartData.image)
+                    .replace(/--year--/ig, cartData.published)
+                    .replace(/--pages--/ig, cartData.pages)
+                    .replace(/--format--/ig, cartData.format)
+                    .replace(/--cover--/ig, cartData.cover)
+                    .replace(/--isbn--/ig, cartData.isbn)
+                    .replace(/--author--/ig, cartData.author)
+                    .replace(/--product-id--/ig, cartData.id)
+                    .replace(/--price-- грн/ig, '')
+                    .replace(/--qty--/ig, productQty);
+                }
+                cartInsert.innerHTML = cartHTML;
+            };
+
+            xhr.open('GET', url);
+            xhr.send();
+        });
+    }        
+
+    function deletFromCart (idProduct, idQuantity) {
+        let localCartData = localStorage.getItem("cart");
+        const re1 = new RegExp('-'+idProduct+':'+idQuantity+'-,',"g");
+        const re2 = new RegExp(',-'+idProduct+':'+idQuantity+'-',"g");
+        const re3 = new RegExp('-'+idProduct+':'+idQuantity+'-',"g");
+        let summa = document.getElementById('vo-price-summ');
+        // let calloutDeleteBlock = document.getElementById('vo-callout-item' + idProduct);
+
+        localCartData =localCartData
+                                .replace(re1, '')
+                                .replace(re2, '')
+                                .replace(re3, '');
+        localStorage.setItem('cart', localCartData);
+
+        // calloutDeleteBlock.innerHTML = '';
+        setTimeout(hideCatalogItem(idProduct), 300);
+        summa.click();
+    }
+
+    function hideCatalogItem (idProduct) {
+        let calloutDeleteBlock = document.getElementById('vo-callout-item' + idProduct);
+
+        calloutDeleteBlock.innerHTML = '';
+    }
+
+    function changeQuantity (idProduct, productPrice, idQuantity, idPrice, action) {
+        let price = document.getElementById(idPrice);
+        let qty = document.getElementById(idQuantity).value;
+
+        if(action){
+            qtyNumber = parseInt(qty, 10);
+            price.innerText = productPrice * qtyNumber + ' грн';
+        } else{
+            if (price.innerText.split(' ')[0] !== productPrice.toString() ){
+                qtyNumber = parseInt(qty, 10);
+                price.innerText = productPrice * qtyNumber + ' грн';
+            }
+        }
+        summAllPrices();
+
+        // Save new qty to storage
+        const productsLocal = localStorage.getItem("cart");
+        let listCompareId = productsLocal.split(',');
+ 
+        for (let i=0; i < listCompareId.length; i++){
+            if (listCompareId[i].match(idProduct)){
+                listCompareId[i] = "-" + idProduct + ':' + qty + '-';
+            }
+        }
+        localStorage.setItem("cart", listCompareId.join());
+    }
+
+    function quantityProducts(arrowPlus,arrowMinus,inputIdenti, action) {
+        let quantityArrowMinus = document.querySelector('.' + arrowMinus);
+        let quantityArrowPlus = document.querySelector('.' + arrowPlus);
+        let quantityNum = document.querySelector('.' + inputIdenti);
+        let value = parseInt(quantityNum.value, 10);
+
+        if(action){
+            quantityNum.value = (value + 1);
+        } else {
+            if (value > 1) {
+                quantityNum.value = (value - 1);
+            }
+        }
+    }
+
+    window.onload = function(){
+        const clickList = document.querySelectorAll('.default-price');
+        let summa = document.getElementById('vo-price-summ');
+
+        clickList.forEach( function(el) {
+            el.click();
+        });
+
+        summa.click();
+    }
+
+    function summAllPrices(){
+        const allPrices = document.querySelectorAll('.ok-book-order-price');
+        let summa = document.getElementById('vo-price-summ');
+        let summaTemp = 0;
+
+        summa.innerText = '';
+        allPrices.forEach( function(el) {
+            summaTemp += parseInt(el.innerText.split(' ')[0], 10);
+            summa.innerText = summaTemp + ' грн';
+        });
+    }
+
+    function defaultPrice (productPrice, idQuantity, idPrice) {
+        let price = document.getElementById(idPrice);
+        let qty = document.getElementById(idQuantity).value;      
+
+        qtyNumber = parseInt(qty, 10);
+        price.innerText = productPrice * qtyNumber + ' грн';
+    }
+    
+</script>
+</section>
+<!-- /.order -->

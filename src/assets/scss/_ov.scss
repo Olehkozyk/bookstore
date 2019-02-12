@@ -1,0 +1,122 @@
+@import "components/footer";
+@import "components/new-books-slider";
+
+.ok-select-number-page span + span{
+    margin-left: 5px;
+}
+.ok-select-number-page span{
+    padding: 5px;
+    text-decoration: none;
+    color: #110601;
+    font-family: 'Philosopher', sans-serif;
+    font-size: 18px;
+}
+.ok-select-number-page span:hover{
+    cursor: pointer;
+    color: #F9D61C;
+}
+span.page-active{
+    color: #F9D61C;
+    cursor: default;
+}
+.vo-cart-title{
+    font-size: 36px;
+    color: #110601;
+    font-family: Philosopher;
+    border-bottom: 1px solid #110601;
+    margin-bottom: 25px;
+}
+.vo-cart-title h4{
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.vo-cart-table-head{
+    font-family: Forum;
+    border-bottom: 1px solid #110601;
+    display: flex;
+    line-height: 29px;
+    font-size: 24px;
+    color: #110601;
+}
+.vo-cart-table-footer{
+    display: flex;
+    justify-content: flex-end;
+    line-height: 29px;
+    font-size: 24px;
+    color: #110601;
+    border-top: 1px solid #110601;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.vo-cart-tab-title{
+    font-size: 30px;
+    color: #999999;
+    padding-left: 15px;
+}
+.order{
+    overflow-y: hidden;
+}
+.callout{
+    border: none;
+}
+.vo-qty-price{
+    display: flex;
+    // justify-content: space-between;
+    // margin-left: -10px;
+    div + div{
+        margin-left: 60px;
+    }
+}
+.close-button{
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    @include breakpoint(medium){
+        left: unset;
+        top: 5px;
+        right: 10px;
+    }
+}
+.ok-order-img img{
+    max-width: 100%;
+    @include breakpoint(medium){
+        max-width: 160px;
+    }
+}
+.vo-minus{
+    min-width: 30px;
+}
+.vo-plus{
+    min-width: 30px;
+}
+.vo-single-product{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+@media (min-width: 450px) {
+    .vo-custom-size{
+        width: 100%
+    }
+    .vo-single-product{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+.vo-search-title{
+    padding: 30px;
+    font-size: 24px;
+    font-family: 'Forum', cursive;
+    span{
+        font-style: italic;
+    }
+}
+.vo-search-list{
+    overflow: hidden;
+    padding-left: 5px;
+    padding-right: 5px;
+    @include breakpoint(medium){
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
